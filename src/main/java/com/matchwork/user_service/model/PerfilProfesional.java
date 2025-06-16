@@ -28,6 +28,7 @@ public class PerfilProfesional {
 
     private String titulo;           
     private String fotoUrl;
+    private String cvUrl;
 
     @Column(length = 2000)
     private String presentacion;

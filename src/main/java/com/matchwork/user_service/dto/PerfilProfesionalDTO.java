@@ -12,6 +12,7 @@ public class PerfilProfesionalDTO {
     private UsuarioDTO usuario;             // datos del usuario anidado
     private String titulo;
     private String fotoUrl;
+    private String cvUrl;
     private String presentacion;
     private String disponibilidad;
     private String modoTrabajo;
@@ -25,6 +26,7 @@ public class PerfilProfesionalDTO {
             UsuarioDTO usuario,
             String titulo,
             String fotoUrl,
+            String cvUrl,
             String presentacion,
             String disponibilidad,
             String modoTrabajo,
@@ -34,6 +36,7 @@ public class PerfilProfesionalDTO {
         this.usuario = usuario;
         this.titulo = titulo;
         this.fotoUrl = fotoUrl;
+        this.cvUrl = cvUrl;
         this.presentacion = presentacion;
         this.disponibilidad = disponibilidad;
         this.modoTrabajo = modoTrabajo;
@@ -114,4 +117,14 @@ public class PerfilProfesionalDTO {
     public void setEstudios(List<EstudioDTO> estudios) {
         this.estudios = estudios;
     }
+
+    public String getCvUrl() {
+        return cvUrl;
+    }
+
+    public void setCvUrl(String cvUrl) {
+        this.cvUrl = cvUrl;
+    }
+
+    
 }

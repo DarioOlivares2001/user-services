@@ -61,6 +61,7 @@ public class PerfilProfesionalService {
                 usuarioDTO,
                 entidad.getTitulo(),
                 entidad.getFotoUrl(),
+                entidad.getCvUrl(),
                 entidad.getPresentacion(),
                 entidad.getDisponibilidad(),
                 entidad.getModoTrabajo(),
