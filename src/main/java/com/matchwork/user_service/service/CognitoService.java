@@ -23,7 +23,7 @@ public class CognitoService {
     @Value("${aws.cognito.clientId}")
     private String clientId;
     
-    // Si tienes Client Secret, agrégalo aquí
+   
     @Value("${aws.cognito.clientSecret:}")
     private String clientSecret;
     
@@ -31,13 +31,13 @@ public class CognitoService {
         this.cognitoClient = cognitoClient;
     }
     
-    // Registro en Cognito
+    
     public void signUp(String email, String password, String nombre, String rol) {
         try {
             Map<String, String> attributes = new HashMap<>();
             attributes.put("email", email);
             attributes.put("name", nombre);
-            attributes.put("custom:rol", rol); // Atributo personalizado
+            attributes.put("custom:rol", rol);
             
             SignUpRequest request = SignUpRequest.builder()
                     .clientId(clientId)
@@ -61,7 +61,7 @@ public class CognitoService {
         }
     }
     
-    // Login en Cognito
+ 
     public AdminInitiateAuthResponse signIn(String email, String password) {
         try {
             Map<String, String> authParams = new HashMap<>();
@@ -83,7 +83,7 @@ public class CognitoService {
         }
     }
     
-    // Confirmar registro (código de verificación)
+  
     public void confirmSignUp(String email, String confirmationCode) {
         try {
             ConfirmSignUpRequest request = ConfirmSignUpRequest.builder()
@@ -100,7 +100,7 @@ public class CognitoService {
         }
     }
     
-    // Calcular Secret Hash (si tienes Client Secret configurado)
+
     private String calculateSecretHash(String username) {
         if (clientSecret == null || clientSecret.isEmpty()) {
             return null;

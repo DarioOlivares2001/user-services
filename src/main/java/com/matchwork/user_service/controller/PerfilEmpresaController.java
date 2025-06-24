@@ -26,7 +26,7 @@ public class PerfilEmpresaController {
 
     private final PerfilEmpresaRepository perfilRepo;
     private final UsuarioRepository usuarioRepo;
-    private final S3Service s3Service;           // <--- inyectar S3Service
+    private final S3Service s3Service;           
     private static final Logger log = LoggerFactory.getLogger(PerfilEmpresaController.class);
 
 
@@ -41,7 +41,7 @@ public class PerfilEmpresaController {
    @GetMapping
     public ResponseEntity<PerfilEmpresaDTO> getPerfil(@PathVariable Long userId) {
         return perfilRepo.findById(userId)
-              .map(this::toDTO)                                // convertimos la entidad a DTO
+              .map(this::toDTO)                                
               .map(ResponseEntity::ok)
               .orElse(ResponseEntity.notFound().build());
     }
@@ -85,13 +85,13 @@ public class PerfilEmpresaController {
             @PathVariable Long userId,
             @RequestParam("file") MultipartFile file) {
         try {
-            // 1) Verificar usuario existe
+           
             Usuario usr = usuarioRepo.findById(userId)
                 .orElseThrow(() ->
                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado")
                 );
 
-            // 2) Cargar o crear perfilEmpresa
+         
             PerfilEmpresa perfil = perfilRepo.findById(userId)
                 .orElseGet(() -> {
                     PerfilEmpresa pe = new PerfilEmpresa();
@@ -99,19 +99,19 @@ public class PerfilEmpresaController {
                     return pe;
                 });
 
-            // 3) Si ya tenía logo, bórralo de S3
+         
             if (perfil.getLogoUrl() != null) {
                 s3Service.deleteFile(perfil.getLogoUrl());
             }
 
-            // 4) Subir nuevo logo
+            
             String logoUrl = s3Service.uploadCompanyLogo(userId, file);
 
-            // 5) Actualizar entidad y guardar
+           
             perfil.setLogoUrl(logoUrl);
             perfilRepo.save(perfil);
 
-            // 6) Responder con la URL
+           
             Map<String, String> resp = new HashMap<>();
             resp.put("logoUrl", logoUrl);
             resp.put("message", "Logo subido exitosamente");
@@ -123,9 +123,9 @@ public class PerfilEmpresaController {
                 "Error al procesar el archivo: " + e.getMessage()
             );
         } catch (Exception e) {
-            // guardamos la traza completa en el log
+           
             log.error("Fallo subiendo logo de empresa para userId=" + userId, e);
-            // re-lanzamos incluyendo la causa
+          
             throw new ResponseStatusException(
             HttpStatus.INTERNAL_SERVER_ERROR,
             "Error interno del servidor: " + e.getMessage(),
@@ -134,10 +134,7 @@ public class PerfilEmpresaController {
         }
     }
 
-    // ------------------------------------------------------------
-    // 🌟 NUEVO: borrar logo de empresa
-    //    DELETE /api/usuarios/{userId}/perfil-empresa/logo
-    // ------------------------------------------------------------
+   
     @DeleteMapping("/logo")
     public ResponseEntity<Map<String, String>> deleteLogo(@PathVariable Long userId) {
         try {

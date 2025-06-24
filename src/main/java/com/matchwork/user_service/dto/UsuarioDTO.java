@@ -1,9 +1,6 @@
 package com.matchwork.user_service.dto;
 
-/**
- * DTO que representa los datos básicos del Usuario
- * que forman parte del PerfilProfesional.
- */
+
 public class UsuarioDTO {
 
     private Long id;
@@ -22,7 +19,7 @@ public class UsuarioDTO {
         this.comuna = comuna;
     }
 
-    // ─── Getters / Setters ───
+
 
     public Long getId() {
         return id;

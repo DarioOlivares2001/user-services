@@ -1,4 +1,4 @@
-// src/main/java/com/matchwork/user_service/model/PerfilEmpresa.java
+
 package com.matchwork.user_service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +25,6 @@ public class PerfilEmpresa {
     @Column(length = 2000)
     private String descripcion;
 
-    private String industria;      // p.ej. "Tecnología", "Salud", etc.
+    private String industria;     
     private String ubicacion;
 }

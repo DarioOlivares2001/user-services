@@ -1,4 +1,3 @@
-// src/main/java/com/matchwork/user_service/controller/PerfilProfesionalController.java
 package com.matchwork.user_service.controller;
 
 import com.matchwork.user_service.dto.PerfilProfesionalDTO;
@@ -58,36 +57,34 @@ public class PerfilProfesionalController {
 
         return perfilRepo.findById(userId)
             .map(existing -> {
-                // 1) SI YA EXISTE: actualizo los campos cambiados
+          
                 existing.setTitulo(datos.getTitulo());
                 existing.setFotoUrl(datos.getFotoUrl());
                 existing.setPresentacion(datos.getPresentacion());
                 existing.setDisponibilidad(datos.getDisponibilidad());
                 existing.setModoTrabajo(datos.getModoTrabajo());
 
-                // Sustituyo las colecciones: EXPERIENCIAS
+         
                 existing.getExperiencias().clear();
                 for (PerfilExperiencia exp : datos.getExperiencias()) {
                     exp.setPerfilProfesional(existing);
                     existing.getExperiencias().add(exp);
                 }
 
-                // SUSTITUYO las colecciones: ESTUDIOS
+        
                 existing.getEstudios().clear();
                 for (PerfilEstudio est : datos.getEstudios()) {
                     est.setPerfilProfesional(existing);
                     existing.getEstudios().add(est);
                 }
 
-                // Hacemos save → Hibernate hará MERGE sobre la fila existente
+               
                 return ResponseEntity.ok(perfilRepo.save(existing));
             })
             .orElseGet(() -> {
-                // 2) SI NO EXISTE: crearlo de cero
+              
                 datos.setUsuario(u);
-                // NO usemos datos.setId(userId) porque @MapsId se encarga de eso
-
-                // Asegurar que cada hijo tenga referencia al padre
+             
                 for (PerfilExperiencia exp : datos.getExperiencias()) {
                     exp.setPerfilProfesional(datos);
                 }
@@ -95,48 +92,41 @@ public class PerfilProfesionalController {
                     est.setPerfilProfesional(datos);
                 }
 
-                // Al hacer save con datos.getId()==null, Hibernate hará PERSIST (INSERT)
+         
                 return ResponseEntity.ok(perfilRepo.save(datos));
             });
     }
 
-    /**
-     * NUEVO ENDPOINT:
-     * GET /api/usuarios/{userId}/perfil-profesional/completo
-     * → Devuelve PerfilProfesionalDTO con datos de usuario anidado + experiencias + estudios.
-     */
+    
     @GetMapping("/completo")
     public ResponseEntity<PerfilProfesionalDTO> getPerfilCompleto(@PathVariable Long userId) {
         PerfilProfesionalDTO dto = perfilService.getPerfilCompleto(userId);
         return ResponseEntity.ok(dto);
     }
 
-/**
-     * NUEVO ENDPOINT: Subir foto de perfil
-     * POST /api/usuarios/{userId}/perfil-profesional/foto
-     */
+
     @PostMapping("/foto")
     public ResponseEntity<Map<String, String>> uploadProfilePhoto(
             @PathVariable Long userId,
             @RequestParam("file") MultipartFile file) {
         
         try {
-            // Verificar que el usuario existe
+       
             usuarioRepo.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
-            // Obtener el perfil profesional si existe
+      
             PerfilProfesional perfil = perfilRepo.findById(userId).orElse(null);
             
-            // Si ya tiene foto, eliminar la anterior
+        
             if (perfil != null && perfil.getFotoUrl() != null) {
                 s3Service.deleteFile(perfil.getFotoUrl());
             }
 
-            // Subir nueva foto
+       
             String fotoUrl = s3Service.uploadProfilePhoto(userId, file);
 
-            // Actualizar en base de datos
+          
             if (perfil != null) {
                 perfil.setFotoUrl(fotoUrl);
                 perfilRepo.save(perfil);
@@ -155,32 +145,29 @@ public class PerfilProfesionalController {
         }
     }
 
-    /**
-     * NUEVO ENDPOINT: Subir CV
-     * POST /api/usuarios/{userId}/perfil-profesional/cv
-     */
+   
     @PostMapping("/cv")
     public ResponseEntity<Map<String, String>> uploadCV(
             @PathVariable Long userId,
             @RequestParam("file") MultipartFile file) {
         
         try {
-            // Verificar que el usuario existe
+        
             usuarioRepo.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
-            // Obtener el perfil profesional si existe
+       
             PerfilProfesional perfil = perfilRepo.findById(userId).orElse(null);
             
-            // Si ya tiene CV, eliminar el anterior
+           
             if (perfil != null && perfil.getCvUrl() != null) {
                 s3Service.deleteFile(perfil.getCvUrl());
             }
 
-            // Subir nuevo CV
+        
             String cvUrl = s3Service.uploadCV(userId, file);
 
-            // Actualizar en base de datos
+       
             if (perfil != null) {
                 perfil.setCvUrl(cvUrl);
                 perfilRepo.save(perfil);
@@ -199,10 +186,7 @@ public class PerfilProfesionalController {
         }
     }
 
-    /**
-     * NUEVO ENDPOINT: Eliminar foto de perfil
-     * DELETE /api/usuarios/{userId}/perfil-profesional/foto
-     */
+ 
     @DeleteMapping("/foto")
     public ResponseEntity<Map<String, String>> deleteProfilePhoto(@PathVariable Long userId) {
         try {
@@ -225,10 +209,7 @@ public class PerfilProfesionalController {
         }
     }
 
-    /**
-     * NUEVO ENDPOINT: Eliminar CV
-     * DELETE /api/usuarios/{userId}/perfil-profesional/cv
-     */
+   
     @DeleteMapping("/cv")
     public ResponseEntity<Map<String, String>> deleteCV(@PathVariable Long userId) {
         try {

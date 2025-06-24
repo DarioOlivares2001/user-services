@@ -1,8 +1,7 @@
-// src/main/java/com/matchwork/user_service/model/PerfilProfesional.java
 package com.matchwork.user_service.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Fetch;         // ← IMPORT CORRECTO
+import org.hibernate.annotations.Fetch;        
 import org.hibernate.annotations.FetchMode;
 import jakarta.persistence.*;
 import lombok.*;

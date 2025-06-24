@@ -1,4 +1,3 @@
-// src/main/java/com/matchwork/user_service/model/UsuarioHabilidad.java
 package com.matchwork.user_service.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

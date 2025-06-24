@@ -18,14 +18,14 @@ public class Usuario {
     private String nombre;
     private String correo;
     private String contrasena;
-    private String rol; // TRABAJADOR o EMPRESA
+    private String rol; 
     private String comuna;
 
-    // Agregar estos campos a tu clase Usuario existente
+   
     @Column(name = "cognito_sub", unique = true)
     private String cognitoSub;
 
-    // En Oracle usamos Number(1) que mapeamos a Boolean en Java
+   
     @Column(name = "usa_cognito", columnDefinition = "NUMBER(1) DEFAULT 0")
     private Boolean usaCognito = false;
 

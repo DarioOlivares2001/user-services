@@ -25,10 +25,7 @@ public class PerfilProfesionalService {
         this.perfilRepo = perfilRepo;
     }
 
-    /**
-     * Recupera el PerfilProfesional completo (con usuario, experiencias, estudios)
-     * y lo mapea a PerfilProfesionalDTO.
-     */
+    
     public PerfilProfesionalDTO getPerfilCompleto(Long userId) {
         PerfilProfesional entidad = perfilRepo.findByIdWithUsuario(userId)
                 .orElseThrow(() ->
@@ -45,17 +42,17 @@ public class PerfilProfesionalService {
                 usuario.getComuna()
         );
 
-        // 2) Mapeamos lista de experiencias
+       
         List<ExperienciaDTO> expDTOs = entidad.getExperiencias().stream()
                 .map(this::mapToExperienciaDTO)
                 .collect(Collectors.toList());
 
-        // 3) Mapeamos lista de estudios
+
         List<EstudioDTO> estDTOs = entidad.getEstudios().stream()
                 .map(this::mapToEstudioDTO)
                 .collect(Collectors.toList());
 
-        // 4) Construimos y retornamos el PerfilProfesionalDTO completo
+      
         return new PerfilProfesionalDTO(
                 entidad.getId(),
                 usuarioDTO,
@@ -70,7 +67,7 @@ public class PerfilProfesionalService {
         );
     }
 
-    // ─── Métodos auxiliares de mapeo ───
+   
 
     private ExperienciaDTO mapToExperienciaDTO(PerfilExperiencia exp) {
         return new ExperienciaDTO(

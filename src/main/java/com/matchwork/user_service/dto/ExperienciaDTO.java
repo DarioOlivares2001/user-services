@@ -2,10 +2,7 @@ package com.matchwork.user_service.dto;
 
 import java.time.LocalDate;
 
-/**
- * DTO mínimo para exponer cada experiencia en PerfilProfesional.
- * Ajusta campos según tu entidad real (ej. fechaInicio, fechaFin, cargo, empresa, etc.).
- */
+
 public class ExperienciaDTO {
 
     private Long id;
@@ -26,7 +23,7 @@ public class ExperienciaDTO {
         this.fechaFin = fechaFin;
     }
 
-    // ─── Getters / Setters ───
+  
 
     public Long getId() {
         return id;

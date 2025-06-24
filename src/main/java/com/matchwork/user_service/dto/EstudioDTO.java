@@ -2,10 +2,7 @@ package com.matchwork.user_service.dto;
 
 import java.time.LocalDate;
 
-/**
- * DTO mínimo para exponer cada estudio en PerfilProfesional.
- * Ajusta campos según tu entidad real (ej. nombreInstitucion, tituloObtenido, años, etc.).
- */
+
 public class EstudioDTO {
 
     private Long id;

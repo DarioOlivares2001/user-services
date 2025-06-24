@@ -1,4 +1,3 @@
-// src/main/java/com/matchwork/user_service/model/PerfilEstudio.java
 package com.matchwork.user_service.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

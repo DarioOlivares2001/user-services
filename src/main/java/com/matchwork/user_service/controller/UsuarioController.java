@@ -59,10 +59,10 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository
         .findByCorreo(request.getCorreo())
         .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        // Por seguridad: limpia la contraseña
+ 
         usuario.setContrasena(null);
 
-        // 3) Devuelve ambos
+
         return ResponseEntity.ok(new LoginResponse(token, usuario));
        
     }
@@ -80,7 +80,7 @@ public class UsuarioController {
 
 
 
-    // al final de UsuarioController.java
+
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> findById(@PathVariable Long id) {
         return usuarioRepository.findById(id)

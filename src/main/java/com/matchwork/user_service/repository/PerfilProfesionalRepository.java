@@ -1,4 +1,3 @@
-// src/main/java/com/matchwork/user_service/repository/PerfilProfesionalRepository.java
 package com.matchwork.user_service.repository;
 
 import com.matchwork.user_service.model.PerfilProfesional;
@@ -12,10 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface PerfilProfesionalRepository extends JpaRepository<PerfilProfesional, Long> { 
 
 
- /**
-     * Recupera un PerfilProfesional **junto con** su usuario,
-     * experiencias y estudios en una única consulta.
-     */
+
      @Query("""
         SELECT p 
         FROM PerfilProfesional p

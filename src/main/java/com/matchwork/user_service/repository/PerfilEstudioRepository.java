@@ -1,4 +1,3 @@
-// src/main/java/com/matchwork/user_service/repository/PerfilEstudioRepository.java
 package com.matchwork.user_service.repository;
 
 import com.matchwork.user_service.model.PerfilEstudio;

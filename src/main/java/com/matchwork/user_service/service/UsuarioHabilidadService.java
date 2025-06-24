@@ -127,14 +127,14 @@ public class UsuarioHabilidadService {
     }
 
      public List<UsuarioHabilidadDTO> obtenerHabilidadesPorUsuarioIdConId(Long userId) {
-        // 1) Obtener la entidad Usuario (lanzar excepción si no existe)
+
         Usuario usuario = usuarioRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // 2) Traer TODAS las filas de la tabla usuario_habilidad para ese usuario
+  
         List<UsuarioHabilidad> listaEntidades = usuarioHabilidadRepository.findByUsuario(usuario);
 
-        // 3) Mapear cada entidad a un DTO (id de la relación, nombre de la habilidad)
+   
         return listaEntidades.stream()
                 .map(uh -> new UsuarioHabilidadDTO(
                         uh.getId(),
