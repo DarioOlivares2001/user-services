@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios/{userId}/perfil-profesional/experiencias")
-@CrossOrigin(origins = "*")
+
 public class PerfilExperienciaController {
 
   private final PerfilProfesionalRepository perfilRepo;

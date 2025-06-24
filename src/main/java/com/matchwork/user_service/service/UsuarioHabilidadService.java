@@ -48,8 +48,8 @@ public class UsuarioHabilidadService {
     }
 
 
-    public UsuarioHabilidad asociarHabilidad(String correoUsuario, Long habilidadId) {
-        Usuario usuario = usuarioRepository.findByCorreo(correoUsuario)
+    public UsuarioHabilidad asociarHabilidad(Long usuarioId, Long habilidadId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     
         Habilidad habilidad = habilidadRepository.findById(habilidadId)
@@ -69,8 +69,8 @@ public class UsuarioHabilidadService {
     }
 
 
-    public List<UsuarioHabilidad> asociarMultiplesHabilidades(String correoUsuario, List<Long> habilidadIds) {
-        Usuario usuario = usuarioRepository.findByCorreo(correoUsuario)
+    public List<UsuarioHabilidad> asociarMultiplesHabilidades(Long usuarioId, List<Long> habilidadIds) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         List<UsuarioHabilidad> nuevas = new ArrayList<>();
@@ -94,15 +94,23 @@ public class UsuarioHabilidadService {
 
 
     @Transactional    
-    public void eliminarHabilidadesPorCorreo(String correo) {
-        usuarioHabilidadRepository.deleteByUsuarioCorreo(correo);
+    public void eliminarHabilidadesPorUsuarioId(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuarioHabilidadRepository.deleteByUsuario(usuario);
     }
-
 
     @Transactional
-    public void eliminarHabilidad(String correo, Long habilidadId) {
-        usuarioHabilidadRepository.deleteByUsuarioCorreoAndHabilidadId(correo, habilidadId);
+    public void eliminarHabilidad(Long usuarioId, Long habilidadId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Habilidad habilidad = habilidadRepository.findById(habilidadId)
+                .orElseThrow(() -> new RuntimeException("Habilidad no encontrada"));
+        usuarioHabilidadRepository.deleteByUsuarioAndHabilidad(usuario, habilidad);
     }
+
+
+    
 
     @Transactional
     public void eliminarHabilidadPorId(Long usuarioHabilidadId) {

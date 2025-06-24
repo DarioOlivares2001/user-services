@@ -24,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/usuarios/{userId}/perfil-profesional")
-@CrossOrigin(origins = "*")
+
 public class PerfilProfesionalController {
     private final PerfilProfesionalRepository perfilRepo;
     private final UsuarioRepository usuarioRepo;

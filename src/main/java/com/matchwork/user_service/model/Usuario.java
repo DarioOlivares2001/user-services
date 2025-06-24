@@ -21,6 +21,14 @@ public class Usuario {
     private String rol; // TRABAJADOR o EMPRESA
     private String comuna;
 
+    // Agregar estos campos a tu clase Usuario existente
+    @Column(name = "cognito_sub", unique = true)
+    private String cognitoSub;
+
+    // En Oracle usamos Number(1) que mapeamos a Boolean en Java
+    @Column(name = "usa_cognito", columnDefinition = "NUMBER(1) DEFAULT 0")
+    private Boolean usaCognito = false;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<UsuarioHabilidad> habilidades = new ArrayList<>();
@@ -80,4 +88,22 @@ public class Usuario {
     public void setHabilidades(List<UsuarioHabilidad> habilidades) {
         this.habilidades = habilidades;
     }
+
+    public String getCognitoSub() {
+        return cognitoSub;
+    }
+
+    public void setCognitoSub(String cognitoSub) {
+        this.cognitoSub = cognitoSub;
+    }
+
+    public Boolean getUsaCognito() {
+        return usaCognito;
+    }
+
+    public void setUsaCognito(Boolean usaCognito) {
+        this.usaCognito = usaCognito;
+    }
+
+    
 }

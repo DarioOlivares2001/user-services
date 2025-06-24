@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: user-service
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY}
+  secretKey: ${AWS_SECRET_KEY}
+  region: us-east-1
+  s3:
+    bucketName: matchwork-files
+    baseUrl: ""
+  cognito:
+    userPoolId: ${AWS_COGNITO_POOL_ID}
+    clientId: ${AWS_COGNITO_CLIENT_ID}
+    region: us-east-1
